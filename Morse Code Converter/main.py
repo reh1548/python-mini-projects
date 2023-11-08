@@ -4,37 +4,37 @@ from tkinter import *
 
 
 #----------------UTILITY FUNCTION------------
-
+# Define the Morse code dictionary.
 morse_code = {
     'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....',
     'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.',
     'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
-    'Y': '-.--', 'Z': '--..',
-    
-    '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': '-....',
-    '7': '--...', '8': '---..', '9': '----.',
-    
-    '.': '.-.-.-', ',': '--..--', '?': '..--..', "'": '.----.', '!': '-.-.--', '/': '-..-.', '(': '-.--.',
-    ')': '-.--.-', '&': '.-...', ':': '---...', ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '-': '-....-',
-    '_': '..--.-', '"': '.-..-.', '$': '...-..-', '@': '.--.-.',
-
-    ' ': '/'  # Three spaces represent a space in Morse code
+    'Y': '-.--', 'Z': '--..', '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
+    '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.', '.': '.-.-.-', ',': '--..--',
+    '?': '..--..', "'": '.----.', '!': '-.-.--', '/': '-..-.', '(': '-.--.', ')': '-.--.-', '&': '.-...',
+    ':': '---...', ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '-': '-....-', '_': '..--.-', '"': '.-..-.',
+    '$': '...-..-', '@': '.--.-.', ' ': '/'
 }
 
+# Convert a message to Morse code.
+def to_morse_code():
+    message = entry1.get()
+    morse_code = ''
+    for char in message.upper():
+        if char in morse_code:
+            morse += morse_code[char] + ' '
+            morse_label.config(text=morse) 
 
-def text_to_morse_converter():
-    # Convert text to Morse code
-    text = entry1.get().upper()
-    morse = " ".join([morse_code[c] for c in text])
-    morse_label.config(text=morse) 
-
-def morse_to_text_converter():
-    # Convert Morse code to text
-    text = entry2.get()
-    text = ''.join([k for k, v in morse_code.items() if v == text])
-    print(text)
-    text_label.config(text=text) 
-
+# Convert a Morse code sequence to a message.
+def from_morse_code():
+    morse_code = entry2.get()
+    message = ''
+    morse_code = morse_code.split(' ')
+    for code in morse_code:
+        for char, morse in morse_code.items():
+            if morse == code:
+                message += char
+                text_label.config(text=message) 
 
 #----------------UI SETUP----------------
 window = Tk()
@@ -60,7 +60,7 @@ entry1.insert(END, string="")
 entry1.grid(sticky=W, column=0, row=2)
 
 #button to submit the text
-button1 = Button(width=20, text="Convert To Morse Code", command=text_to_morse_converter)
+button1 = Button(width=20, text="Convert To Morse Code", command=to_morse_code)
 button1.grid(sticky=W, column=0, row=3)
 
 # Label to display Morse code
@@ -89,7 +89,7 @@ entry2.insert(END, string="")
 entry2.grid(sticky=W, column=0, row=7)
 
 #Button to submit the morse code
-button2 = Button(width=20, text="Convert To Text", command=morse_to_text_converter)
+button2 = Button(width=20, text="Convert To Text", command=from_morse_code)
 button2.grid(sticky=W, column=0, row=8)
 
 # Label to display the Text
